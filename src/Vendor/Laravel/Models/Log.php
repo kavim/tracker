@@ -45,6 +45,11 @@ class Log extends Base
         return $this->belongsTo($this->getConfig()->get('route_path_model'), 'route_path_id');
     }
 
+    public function referer()
+    {
+        return $this->belongsTo($this->getConfig()->get('referer_model'), 'referer_id');
+    }
+
     public function pageViews($minutes, $results)
     {
         $query = $this->select(
