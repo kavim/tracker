@@ -22,17 +22,17 @@ class Log extends Base
 
     public function session()
     {
-        return $this->belongsTo($this->getConfig()->get('session_model'));
+        return $this->belongsTo($this->getConfig()->get('session_model'), 'session_id');
     }
 
     public function path()
     {
-        return $this->belongsTo($this->getConfig()->get('path_model'));
+        return $this->belongsTo($this->getConfig()->get('path_model'), 'path_id');
     }
 
     public function error()
     {
-        return $this->belongsTo($this->getConfig()->get('error_model'));
+        return $this->belongsTo($this->getConfig()->get('error_model'), 'error_id');
     }
 
     public function logQuery()
@@ -53,10 +53,10 @@ class Log extends Base
     public function pageViews($minutes, $results)
     {
         $query = $this->select(
-                $this->getConnection()->raw('DATE(created_at) as date, count(*) as total')
-            )->groupBy(
-                $this->getConnection()->raw('DATE(created_at)')
-            )
+            $this->getConnection()->raw('DATE(created_at) as date, count(*) as total')
+        )->groupBy(
+            $this->getConnection()->raw('DATE(created_at)')
+        )
             ->period($minutes)
             ->orderBy('date');
 
@@ -72,7 +72,8 @@ class Log extends Base
         $query =
             $this
             ->select(
-                'tracker_geoip.country_name as label', $this->getConnection()->raw('count(tracker_log.id) as value')
+                'tracker_geoip.country_name as label',
+                $this->getConnection()->raw('count(tracker_log.id) as value')
             )
             ->join('tracker_sessions', 'tracker_log.session_id', '=', 'tracker_sessions.id')
             ->join('tracker_geoip', 'tracker_sessions.geoip_id', '=', 'tracker_geoip.id')

@@ -377,4 +377,9 @@ return [
      * Stats Panel controllers namespace
      */
     'stats_controllers_namespace' => 'PragmaRX\Tracker\Vendor\Laravel\Controllers',
+
+    /*
+     * Set a default user agent
+     */
+    'default_user_agent' => '',
 ];
