@@ -20,19 +20,19 @@
 				</li>
 
 				<li {{ Session::get('tracker.stats.days') == '1' ? 'class="active"' : '' }}>
-					<a href="{{route('tracker.stats.index')}}?days=1">@choice("pragmarx/tracker::tracker.no_days",1, ["count" => 1])</a>
+					<a href="{{route('tracker.stats.index')}}?days=1">@choice("tracker::tracker.no_days",1, ["count" => 1])</a>
 				</li>
 
 				<li {{ Session::get('tracker.stats.days') == '7' ? 'class="active"' : '' }}>
-					<a href="{{route('tracker.stats.index')}}?days=7">@choice("pragmarx/tracker::tracker.no_days",7, ["count" => 7])</a>
+					<a href="{{route('tracker.stats.index')}}?days=7">@choice("tracker::tracker.no_days",7, ["count" => 7])</a>
 				</li>
 
 				<li {{ Session::get('tracker.stats.days') == '30' ? 'class="active"' : '' }}>
-					<a href="{{route('tracker.stats.index')}}?days=30">@choice("pragmarx/tracker::tracker.no_days",30, ["count" => 30])</a>
+					<a href="{{route('tracker.stats.index')}}?days=30">@choice("tracker::tracker.no_days",30, ["count" => 30])</a>
 				</li>
 
 				<li {{ Session::get('tracker.stats.days') == '365' ? 'class="active"' : '' }}>
-					<a href="{{route('tracker.stats.index')}}?days=365">@choice("pragmarx/tracker::tracker.no_years",1, ["count" => 1])</a>
+					<a href="{{route('tracker.stats.index')}}?days=365">@choice("tracker::tracker.no_years",1, ["count" => 1])</a>
 				</li>
             </ul>
             <!-- /.navbar-top-links -->
