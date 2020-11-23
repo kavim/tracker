@@ -5,6 +5,7 @@ namespace PragmaRX\Tracker\Data;
 use Illuminate\Routing\Router as IlluminateRouter;
 use Illuminate\Session\Store as IlluminateSession;
 use PragmaRX\Support\Config;
+use PragmaRX\Support\GeoIp\GeoIp;
 use PragmaRX\Tracker\Data\Repositories\Agent;
 use PragmaRX\Tracker\Data\Repositories\Connection;
 use PragmaRX\Tracker\Data\Repositories\Cookie;
@@ -31,7 +32,6 @@ use PragmaRX\Tracker\Data\Repositories\SqlQueryLog;
 use PragmaRX\Tracker\Data\Repositories\SystemClass;
 use PragmaRX\Tracker\Services\Authentication;
 use PragmaRX\Tracker\Support\CrawlerDetector;
-use PragmaRX\Tracker\Support\GeoIp\GeoIp;
 use PragmaRX\Tracker\Support\LanguageDetect;
 use PragmaRX\Tracker\Support\MobileDetect;
 
