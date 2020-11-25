@@ -2,9 +2,9 @@
 
 namespace PragmaRX\Tracker\Support\Exceptions;
 
+use Exception as Throwable;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use PragmaRX\Tracker\Tracker;
-use Throwable;
 
 class Handler implements ExceptionHandler
 {
