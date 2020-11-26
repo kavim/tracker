@@ -2,7 +2,7 @@
 
 namespace PragmaRX\Tracker\Support\Exceptions;
 
-use Exception as Throwable;
+use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use PragmaRX\Tracker\Tracker;
 
@@ -32,11 +32,11 @@ class Handler implements ExceptionHandler
         $this->originalErrorHandler = set_error_handler([$this, 'handleError']);
     }
 
-    public function handleThrowable(Throwable $throwable)
+    public function handleThrowable(Exception $throwable)
     {
         try {
             $this->tracker->handleThrowable($throwable);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Ignore Tracker exceptions
         }
 
@@ -50,7 +50,7 @@ class Handler implements ExceptionHandler
             $error = ExceptionFactory::make($err_severity, $err_msg);
 
             $this->tracker->handleThrowable($error);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Ignore Tracker exceptions
         }
 
@@ -58,7 +58,7 @@ class Handler implements ExceptionHandler
         return call_user_func($this->originalErrorHandler, $err_severity, $err_msg, $err_file, $err_line);
     }
 
-    public function report(Throwable $e)
+    public function report(Exception $e)
     {
         try {
             $this->tracker->handleThrowable($e);
@@ -69,17 +69,17 @@ class Handler implements ExceptionHandler
         $this->illuminateHandler->report($e);
     }
 
-    public function shouldReport(Throwable $e)
+    public function shouldReport(Exception $e)
     {
         return $this->illuminateHandler->shouldReport($e);
     }
 
-    public function render($request, Throwable $e)
+    public function render($request, Exception $e)
     {
         return $this->illuminateHandler->render($request, $e);
     }
 
-    public function renderForConsole($output, Throwable $e)
+    public function renderForConsole($output, Exception $e)
     {
         return $this->illuminateHandler->renderForConsole($output, $e);
     }
