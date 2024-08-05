@@ -7,6 +7,8 @@ use App\Models\Agent;
 
 return new class extends Migration
 {
+    protected string $connection = 'tracker';
+
     /**
      * Table related to this migration.
      *

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateTrackerPathsTable extends Migration
 {
+    protected string $connection = 'tracker';
+
     /**
      * Run the migrations.
      *
