@@ -1,8 +1,10 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddTrackerRefererColumns extends Migration
+return new class extends Migration
 {
     /**
      * Table related to this migration.
@@ -18,18 +20,15 @@ class AddTrackerRefererColumns extends Migration
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
-        $this->builder->table(
-            $this->table,
-            function ($table) {
-                $table->string('medium')->nullable()->index();
-                $table->string('source')->nullable()->index();
-                $table->string('search_terms_hash')->nullable()->index();
-            }
-        );
+        Schema::table($this->table, function (Blueprint $table) {
+            $table->string('medium')->nullable()->index();
+            $table->string('source')->nullable()->index();
+            $table->string('search_terms_hash')->nullable()->index();
+        });
 
-        $this->builder->table($this->foreign, function ($table) {
+        Schema::table($this->foreign, function (Blueprint $table) {
             $table->foreign('referer_id', 'tracker_referers_referer_id_fk')
                 ->references('id')
                 ->on('tracker_referers')
@@ -43,22 +42,16 @@ class AddTrackerRefererColumns extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        $this->builder->table(
-            $this->table,
-            function ($table) {
-                $table->dropColumn('medium');
-                $table->dropColumn('source');
-                $table->dropColumn('search_terms_hash');
-            }
-        );
+        Schema::table($this->table, function (Blueprint $table) {
+            $table->dropColumn('medium');
+            $table->dropColumn('source');
+            $table->dropColumn('search_terms_hash');
+        });
 
-        $this->builder->table(
-            $this->foreign,
-            function ($table) {
-                $table->dropForeign('tracker_referers_referer_id_fk');
-            }
-        );
+        Schema::table($this->foreign, function (Blueprint $table) {
+            $table->dropForeign('tracker_referers_referer_id_fk');
+        });
     }
-}
+};

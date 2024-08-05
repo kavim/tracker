@@ -1,8 +1,10 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTrackerLanguagesTable extends Migration
+return new class extends Migration
 {
     /**
      * Table related to this migration.
@@ -16,23 +18,17 @@ class CreateTrackerLanguagesTable extends Migration
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
-        $this->builder->create(
-            $this->table,
-            function ($table) {
-                $table->bigIncrements('id');
-
-                $table->string('preference')->index();
-                $table->string('language-range')->index();
-
-                $table->unique(['preference', 'language-range']);
-
-                $table->timestamps();
-                $table->index('created_at');
-                $table->index('updated_at');
-            }
-        );
+        Schema::create($this->table, function (Blueprint $table) {
+            $table->id();
+            $table->string('preference')->index();
+            $table->string('language-range')->index();
+            $table->unique(['preference', 'language-range']);
+            $table->timestamps();
+            $table->index('created_at');
+            $table->index('updated_at');
+        });
     }
 
     /**
@@ -40,8 +36,8 @@ class CreateTrackerLanguagesTable extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        $this->drop($this->table);
+        Schema::dropIfExists($this->table);
     }
-}
+};

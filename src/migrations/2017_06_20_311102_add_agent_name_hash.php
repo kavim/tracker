@@ -1,9 +1,11 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
-use PragmaRX\Tracker\Vendor\Laravel\Models\Agent;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use App\Models\Agent;
 
-class AddAgentNameHash extends Migration
+return new class extends Migration
 {
     /**
      * Table related to this migration.
@@ -17,30 +19,22 @@ class AddAgentNameHash extends Migration
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
         try {
-            $this->builder->table(
-                $this->table,
-                function ($table) {
-                    $table->dropUnique('tracker_agents_name_unique');
-
-                    $table->string('name_hash', 65)->nullable();
-                }
-            );
+            Schema::table($this->table, function (Blueprint $table) {
+                $table->dropUnique('tracker_agents_name_unique');
+                $table->string('name_hash', 65)->nullable();
+            });
 
             Agent::all()->each(function ($agent) {
                 $agent->name_hash = hash('sha256', $agent->name);
-
                 $agent->save();
             });
 
-            $this->builder->table(
-                $this->table,
-                function ($table) {
-                    $table->unique('name_hash');
-                }
-            );
+            Schema::table($this->table, function (Blueprint $table) {
+                $table->unique('name_hash');
+            });
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
@@ -51,20 +45,15 @@ class AddAgentNameHash extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
         try {
-            $this->builder->table(
-                $this->table,
-                function ($table) {
-                    $table->dropUnique('tracker_agents_name_hash_unique');
-
-                    $table->dropColumn('name_hash');
-
-                    $table->mediumText('name')->unique()->change();
-                }
-            );
+            Schema::table($this->table, function (Blueprint $table) {
+                $table->dropUnique('tracker_agents_name_hash_unique');
+                $table->dropColumn('name_hash');
+                $table->mediumText('name')->unique()->change();
+            });
         } catch (\Exception $e) {
         }
     }
-}
+};

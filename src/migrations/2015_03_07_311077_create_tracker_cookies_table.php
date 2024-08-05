@@ -1,35 +1,25 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTrackerCookiesTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Table related to this migration.
-     *
-     * @var string
-     */
-    private $table = 'tracker_cookies';
-
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
-        $this->builder->create(
-            $this->table,
-            function ($table) {
-                $table->bigIncrements('id');
-
-                $table->string('uuid')->unique();
-
-                $table->timestamps();
-                $table->index('created_at');
-                $table->index('updated_at');
-            }
-        );
+        Schema::create('tracker_cookies', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->timestamps();
+            $table->index('created_at');
+            $table->index('updated_at');
+        });
     }
 
     /**
@@ -37,8 +27,8 @@ class CreateTrackerCookiesTable extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        $this->drop($this->table);
+        Schema::dropIfExists('tracker_cookies');
     }
-}
+};

@@ -1,37 +1,27 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTrackerSqlQueryBindingsParametersTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Table related to this migration.
-     *
-     * @var string
-     */
-    private $table = 'tracker_sql_query_bindings_parameters';
-
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
-        $this->builder->create(
-            $this->table,
-            function ($table) {
-                $table->bigIncrements('id');
-
-                $table->bigInteger('sql_query_bindings_id')->unsigned()->nullable();
-                $table->string('name')->nullable()->index();
-                $table->text('value')->nullable();
-
-                $table->timestamps();
-                $table->index('created_at');
-                $table->index('updated_at');
-            }
-        );
+        Schema::create('tracker_sql_query_bindings_parameters', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('sql_query_bindings_id')->nullable();
+            $table->string('name')->nullable()->index();
+            $table->text('value')->nullable();
+            $table->timestamps();
+            $table->index('created_at');
+            $table->index('updated_at');
+        });
     }
 
     /**
@@ -39,8 +29,8 @@ class CreateTrackerSqlQueryBindingsParametersTable extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        $this->drop($this->table);
+        Schema::dropIfExists('tracker_sql_query_bindings_parameters');
     }
-}
+};
