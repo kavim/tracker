@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    protected string $connection = 'tracker';
+    protected $connection = 'tracker';
 
     /**
      * Run the migrations.
